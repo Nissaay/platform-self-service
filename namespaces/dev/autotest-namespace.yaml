@@ -1,0 +1,48 @@
+# Kubernetes Namespace Request
+# Team: autotest
+# Environment: dev
+# Requested: 2025-10-27
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: devops-autotest-dev
+  labels:
+    team: autotest
+    environment: dev
+    managed-by: platform-team
+    created-via: self-service
+  annotations:
+    team.contact: "autotest@workshop.local"
+    purpose: "Testing automatic GitHub integration"
+    requested-date: "2025-10-27"
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: autotest-dev-quota
+  namespace: devops-autotest-dev
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: "4Gi"
+    limits.cpu: "4"
+    limits.memory: "8Gi"
+    persistentvolumeclaims: "5"
+    services: "10"
+    pods: "20"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: autotest-dev-limits
+  namespace: devops-autotest-dev
+spec:
+  limits:
+  - default:
+      cpu: 500m
+      memory: 512Mi
+    defaultRequest:
+      cpu: 100m
+      memory: 128Mi
+    type: Container
