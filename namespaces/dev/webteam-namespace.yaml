@@ -1,0 +1,49 @@
+# Kubernetes Namespace Request
+# Team: webteam
+# Environment: dev
+# Requested: 2025-10-27
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: devops-webteam-dev
+  labels:
+    team: webteam
+    environment: dev
+    managed-by: platform-team
+    created-via: self-service
+  annotations:
+    team.contact: "webteam@workshop.local"
+    purpose: "Testing self-service workflow with web UI"
+    requested-date: "2025-10-27"
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: webteam-dev-quota
+  namespace: devops-webteam-dev
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: "4Gi"
+    limits.cpu: "4"
+    limits.memory: "8Gi"
+    persistentvolumeclaims: "5"
+    services: "10"
+    pods: "20"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: webteam-dev-limits
+  namespace: devops-webteam-dev
+spec:
+  limits:
+  - default:
+      cpu: 500m
+      memory: 512Mi
+    defaultRequest:
+      cpu: 100m
+      memory: 128Mi
+    type: Container
+
