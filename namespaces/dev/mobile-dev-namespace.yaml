@@ -7,7 +7,7 @@ metadata:
     environment: dev
     managed-by: platform-team
   annotations:
-    team.contact: “tita.kong@hotmail.com
+    team.contact: “mobile-team@company.com"
     purpose: "Mobile application development environment"
 ---
 apiVersion: v1
